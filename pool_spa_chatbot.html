@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pool & Spa Alert Assistant</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e0f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    .chat-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    .chat-header {
+      text-align: center;
+      padding-bottom: 10px;
+    }
+    .chat-box {
+      border: 1px solid #ccc;
+      height: 300px;
+      overflow-y: auto;
+      padding: 10px;
+      background: #f9f9f9;
+      margin-bottom: 10px;
+    }
+    .chat-message {
+      margin: 5px 0;
+    }
+    .user-message {
+      text-align: right;
+      color: blue;
+    }
+    .bot-message {
+      text-align: left;
+      color: green;
+    }
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .alert-button {
+      padding: 8px 12px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .alert-button:hover {
+      background-color: #004d40;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h2>🏊 Pool & Spa Alert Assistant</h2>
+      <p>Welcome! I can help you troubleshoot common pool & spa alerts:</p>
+      <p><strong>Chlorine, pH, Flow, Temperature, Overfeed, Calibration</strong></p>
+    </div>
+    <div class="button-group">
+      <button class="alert-button" onclick="handleAlert('Chlorine Alert')">Chlorine Alert</button>
+      <button class="alert-button" onclick="handleAlert('pH Alert')">pH Alert</button>
+      <button class="alert-button" onclick="handleAlert('Flow Alert')">Flow Alert</button>
+      <button class="alert-button" onclick="handleAlert('Temperature Alert')">Temperature Alert</button>
+      <button class="alert-button" onclick="handleAlert('Overfeed Alert')">Overfeed Alert</button>
+      <button class="alert-button" onclick="handleAlert('Calibration Alert')">Calibration Alert</button>
+    </div>
+    <div class="chat-box" id="chatBox"></div>
+    <input type="text" id="userInput" placeholder="Type your message..." onkeydown="handleUserInput(event)" />
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+
+    function appendMessage(message, sender) {
+      const msgDiv = document.createElement("div");
+      msgDiv.className = "chat-message " + sender + "-message";
+      msgDiv.textContent = message;
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function handleAlert(alertType) {
+      appendMessage(alertType, "user");
+      let response = "";
+      switch(alertType) {
+        case "Chlorine Alert":
+          response = "🔧 Troubleshooting Chlorine Alert:
+- Check chlorine feeder settings.
+- Test chlorine levels.
+- Inspect for clogs or empty feeder.
+- Refill chlorine tablets.";
+          break;
+        case "pH Alert":
+          response = "🔧 Troubleshooting pH Alert:
+- Test pH levels using a test kit.
+- Add pH increaser or decreaser as needed.
+- Ensure proper circulation.";
+          break;
+        case "Flow Alert":
+          response = "🔧 Troubleshooting Flow Alert:
+- Check for clogged filters.
+- Inspect pump basket and skimmer.
+- Ensure water level is adequate.";
+          break;
+        case "Temperature Alert":
+          response = "🔧 Troubleshooting Temperature Alert:
+- Verify heater settings.
+- Check for error codes.
+- Ensure proper water flow.";
+          break;
+        case "Overfeed Alert":
+          response = "🔧 Troubleshooting Overfeed Alert:
+- Inspect chemical feeder.
+- Adjust feed rate.
+- Test water chemistry.";
+          break;
+        case "Calibration Alert":
+          response = "🔧 Troubleshooting Calibration Alert:
+- Recalibrate sensors.
+- Follow manufacturer instructions.
+- Check for sensor damage.";
+          break;
+        default:
+          response = "Sorry, I didn't understand that alert.";
+      }
+      appendMessage(response, "bot");
+    }
+
+    function handleUserInput(event) {
+      if (event.key === "Enter") {
+        const input = event.target.value;
+        appendMessage(input, "user");
+        appendMessage("Please select an alert button above for troubleshooting help.", "bot");
+        event.target.value = "";
+      }
+    }
+  </script>
+</body>
+</html>
